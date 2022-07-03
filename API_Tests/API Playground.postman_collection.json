@@ -1,0 +1,3332 @@
+{
+	"info": {
+		"_postman_id": "2a32e1cc-54bf-4729-aa9a-ccb5f503bede",
+		"name": "API Playground",
+		"description": "These requests showcase some of the things you can do with the API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18155042"
+	},
+	"item": [
+		{
+			"name": "Crud for Products",
+			"item": [
+				{
+					"name": "Create Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"",
+									"pm.globals.set(\"Product_Name\", jsonProduct_name);",
+									"pm.globals.set(\"Product_Id\", jsonProduct_Id);",
+									"",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is MacBook\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Laptop Air M1\",\n\t\"type\": \"Hard Good\",\n\t\"upc\": \"12345676\",\n\t\"price\": 99.99,\n\t\"description\": \"This is a placeholder request for creating a new product.\",\n\t\"model\": \"NP12345\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/products",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Exsiting Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"",
+									"pm.test(\"check the Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check That the Newly Product is created Successfully\", function () {",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update product name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_Id = jsonData.id;",
+									"var jsonProduct_name = jsonData.name;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Id of product is the same as\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is Changed From MacBook to IPad\", function () {",
+									"    pm.expect(jsonData.name).to.include(\"IPad\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"IPad\",\n\t\"type\": \"Hard Good\",\n\t\"upc\": \"12345676\",\n\t\"price\": 99.99,\n\t\"description\": \"This is a placeholder request for creating a new product.\",\n\t\"model\": \"NP12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/products/{{Product_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products",
+								"{{Product_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Product is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products/{{Product_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products",
+								"{{Product_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Exsiting Products after delete action",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Check that the newly created Store is not exsit\", function () {",
+									"    pm.expect(jsonData.name).to.include(\"NotFound\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products/{{Product_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products",
+								"{{Product_Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD for Stores",
+			"item": [
+				{
+					"name": "Create Store",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_name = jsonData.name;",
+									"var jsonStore_Id = jsonData.id;",
+									"",
+									"pm.globals.set(\"Store_Name\", jsonStore_name);",
+									"pm.globals.set(\"Store_Id\", jsonStore_Id);",
+									"",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of Store is New Store\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonStore_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonStore_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t  \"name\": \"New Store\",\n      \"type\": \"BigBox\",\n      \"address\": \"123 Fake St\",\n      \"address2\": \"\",\n      \"city\": \"Springfield\",\n      \"state\": \"MN\",\n      \"zip\": \"55123\",\n      \"lat\": 44.969658,\n      \"lng\": -93.449539,\n      \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Exsiting Stores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_name = jsonData.name;",
+									"var jsonStore_Id = jsonData.id",
+									"",
+									"pm.test(\"check the Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check That the Newly Store is created Successfully\", function () {",
+									"    pm.expect(jsonData.name).to.eql(jsonStore_name);",
+									"    pm.expect(jsonData.id).to.eql(jsonStore_Id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Store",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_name = jsonData.name;",
+									"var jsonStore_Id = jsonData.id",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Id of product is the same as\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonStore_Id);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is Changed From New Store to Apple Store\", function () {",
+									"    pm.expect(jsonStore_name).to.include(\"Apple Store\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t  \"name\": \"Apple Store\",\n      \"type\": \"BigBox\",\n      \"address\": \"123 Fake St\",\n      \"address2\": \"\",\n      \"city\": \"Springfield\",\n      \"state\": \"MN\",\n      \"zip\": \"55123\",\n      \"lat\": 44.969658,\n      \"lng\": -93.449539,\n      \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores/{{Store_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores",
+								"{{Store_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Store",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_name = jsonData.name;",
+									"var jsonStore_Id = jsonData.id",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Store is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonStore_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonStore_name);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores/{{Store_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores",
+								"{{Store_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Exsiting Stores after delete action",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the newly created Store is not exsit\", function () {",
+									"    pm.expect(jsonData.name).to.include(\"NotFound\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores/{{Store_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores",
+								"{{Store_Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD for Services",
+			"item": [
+				{
+					"name": "Create Service",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonService_name = jsonData.name;",
+									"var jsonService_Id = jsonData.id;",
+									"",
+									"pm.globals.set(\"Service_Name\", jsonService_name);",
+									"pm.globals.set(\"Service_Id\", jsonService_Id);",
+									"",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is Test Service\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonService_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonService_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n      \"name\":\"Test Service\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/services",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Exsiting Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonService_name = jsonData.name;",
+									"var jsonService_Id = jsonData.id;",
+									"",
+									"pm.test(\"check the Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check That the Newly Service is created Successfully\", function () {",
+									"    pm.expect(jsonData.name).to.eql(jsonService_name);",
+									"    pm.expect(jsonData.id).to.eql(jsonService_Id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/services",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonService_Id = jsonData.id;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Id of Service is the same as\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonService_Id);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of Service is Changed From Test Service to Alpha Service\", function () {",
+									"    pm.expect(jsonData.name).to.include(\"Alpha Service\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n      \"name\":\"Alpha Service\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/services/{{Service_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"services",
+								"{{Service_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonService_name = jsonData.name;",
+									"var jsonService_Id = jsonData.id;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Service is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonService_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonService_name);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/services/{{Service_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"services",
+								"{{Service_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Exsiting Service after Delete action",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Check that the newly created Store is not exsit\", function () {",
+									"    pm.expect(jsonData.name).to.include(\"NotFound\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/services/{{Service_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"services",
+								"{{Service_Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD for Category",
+			"item": [
+				{
+					"name": "Create Category",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_name = jsonData.name;",
+									"var jsonCategory_Id = jsonData.id ;",
+									"",
+									"pm.globals.set(\"Category_Name\", jsonCategory_name);",
+									"pm.globals.set(\"Category_Id\", jsonCategory_Id);",
+									"",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is Create New Category For Cosmatics\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t\"id\": \"pcmcat12361\",\n\t\"name\": \"Create New Category For Cosmatics\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check The Category Id Is Unique",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Check that the newly created Store is not exsit\", function () {",
+									"    pm.expect(jsonData.message).to.include(\"Validation error\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t\"id\": \"pcmcat12361\",\n\t\"name\": \"New Category\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3030/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Exsiting Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_name = jsonData.name;",
+									"var jsonCategory_Id = jsonData.id ;",
+									"",
+									"pm.test(\"check the Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check That the Newly Category is created Successfully\", function () {",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name);",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_Id = jsonData.id ;",
+									"var jsonCategory_name = jsonData.name;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Id aand name of Category is the same as\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name);",
+									"",
+									"});",
+									"",
+									"pm.test(\"Check that the name of Category is Changed From Create New Category For Cosmatics to Create New Category For Appliance\", function () {",
+									"    pm.expect(jsonData.name).to.include(\"Create New Category For Appliance\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t\"id\": \"pcmcat12361\",\n\t\"name\": \"Create New Category For Appliances\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories/{{Category_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories",
+								"{{Category_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_Id = jsonData.id ;",
+									"var jsonCategory_name = jsonData.name;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Service is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories/{{Category_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories",
+								"{{Category_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Exsiting Categories after delete action",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Check that the newly created Category is not exsit\", function () {",
+									"    pm.expect(jsonData.name).to.include(\"NotFound\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories/{{Category_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories",
+								"{{Category_Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product Name and Description Only",
+			"item": [
+				{
+					"name": "Enter the product name and description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"",
+									"var jsonNewProduct_name = jsonData.name;",
+									"var jsonNewProduct_Id = jsonData.id;",
+									"var jsonNewProduct_Description = jsonData.description;",
+									"",
+									"pm.globals.set(\"Product_Name\", jsonNewProduct_name);",
+									"pm.globals.set(\"Product_Id\", jsonNewProduct_Id);",
+									"pm.globals.set(\"Product_Description\", jsonNewProduct_Description);",
+									"",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is New Shirt\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonNewProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonNewProduct_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"New Shirt\",\n\t\"type\": \"Hard\",\n\t\"upc\": \"12345676\",\n\t\"price\": 100,\n\t\"description\": \"This is a new Shirt\",\n\t\"model\": \"NP12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/products",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product Name and Description Only",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"var jsonNewProduct_name = jsonData.name;",
+									"var jsonNewProduct_Id = jsonData.id;",
+									"var jsonNewProduct_Description = jsonData.description;",
+									"",
+									"pm.test(\"check the Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check That the Product Name and Description appear on Response Body only \", function () {",
+									"    pm.expect(jsonData.name).to.eql(jsonNewProduct_name);",
+									"    pm.expect(jsonData.id).to.eql(jsonNewProduct_Description);",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/products?$select[]=name&$select[]=description",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "$select[]",
+									"value": "name"
+								},
+								{
+									"key": "$select[]",
+									"value": "description"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete The newly Created Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the newly created Product is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products/{{Product_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products",
+								"{{Product_Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Highest Priced Products",
+			"item": [
+				{
+					"name": "Delete All the newly created products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create product with lowest price",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"var jsonProduct_price = jsonData.price;",
+									"",
+									"pm.globals.set(\"Product_Name\", jsonProduct_name);",
+									"pm.globals.set(\"Product_Id\", jsonProduct_Id);",
+									"",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is New Phone\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"New Phone\",\n\t\"type\": \"Hard Good\",\n\t\"upc\": \"12345676\",\n\t\"price\": 20,\n\t\"description\": \"This is a new phone.\",\n\t\"model\": \"NP12345\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/products?$sort[price]=-1",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "$sort[price]",
+									"value": "-1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create product with highest price",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"var jsonProduct_price = jsonData.price;",
+									"",
+									"pm.globals.set(\"Product_Id2\", jsonProduct_Id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is Iphone Screen\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Iphone Screen\",\n\t\"type\": \"Hard Good\",\n\t\"upc\": \"12345676\",\n\t\"price\": 100,\n\t\"description\": \"This is a placeholder request for Iphone Screen.\",\n\t\"model\": \"NP12345\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/products?$sort[price]=-1",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "$sort[price]",
+									"value": "-1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get the highest price of product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_price = jsonData.price;",
+									"var x;",
+									"",
+									"",
+									"pm.test(\"Highest prices products are listed on the First\",function () {",
+									" x = jsonData[\"data\"][0].price;",
+									"     pm.expect(x).to.eql(100);",
+									"",
+									" console.log(x);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products?$sort[price]=-1",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "$sort[price]",
+									"value": "-1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the First Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the First Product is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products/{{Product_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products",
+								"{{Product_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete The second Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Second Product is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products/{{Product_Id2}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products",
+								"{{Product_Id2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories with TV in the name",
+			"item": [
+				{
+					"name": "Add Categories with TV in the name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_name = jsonData.name;",
+									"var jsonCategory_Id = jsonData.id ;",
+									"",
+									"pm.globals.set(\"Category_Id\", jsonCategory_Id);",
+									"pm.globals.set(\"Category_Name\", jsonCategory_name);",
+									"//Category_Id2",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is Create New Category For Applenace/ Tv\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t\"id\": \"pcmcat12399\",\n\t\"name\": \"Create New Category For Applenace\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories?name[$like]=*TV*",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "name[$like]",
+									"value": "*TV*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Categories without TV in the name",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_Id = jsonData.id ;",
+									"var jsonCategory_name_TV = jsonData.name;",
+									"",
+									"pm.globals.set(\"Category_Name_TV\", jsonCategory_name_TV);",
+									"pm.globals.set(\"Category_Id2\", jsonCategory_Id);",
+									"",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is Create New Category without TV in its name\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name_TV);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t\"id\": \"pcmcat12100\",\n\t\"name\": \"TV\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories with TV in the name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_name_TV = jsonData.name;",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of Category contains on TV word on its name\", function () {",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name_TV);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories?name[$like]=*TV*",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "name[$like]",
+									"value": "*TV*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the First Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_Id = jsonData.id ;",
+									"var jsonCategory_name = jsonData.name;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the First Category is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories/{{Category_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories",
+								"{{Category_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the Second Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_Id = jsonData.id ;",
+									"var jsonCategory_name = jsonData.name;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Second Category is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories/{{Category_Id2}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories",
+								"{{Category_Id2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Category Names Only",
+			"item": [
+				{
+					"name": "Create Category",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_name = jsonData.name;",
+									"var jsonCategory_Id = jsonData.id ;",
+									"",
+									"pm.globals.set(\"Category_Name\", jsonCategory_name);",
+									"pm.globals.set(\"Category_Id\", jsonCategory_Id);",
+									"",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of Category is  New Category For Cosmatics\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t\"id\": \"pcmcat12325\",\n\t\"name\": \"New Category For Cosmatics\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category Names",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories?$select[]=name",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "$select[]",
+									"value": "name"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the Newly created Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_Id = jsonData.id ;",
+									"var jsonCategory_name = jsonData.name;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the newly created Category is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories/{{Category_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories",
+								"{{Category_Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find stores that sell Apple products",
+			"item": [
+				{
+					"name": "Create Product from Apple Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"",
+									"pm.globals.set(\"Product_Name\", jsonProduct_name);",
+									"pm.globals.set(\"Product_Id\", jsonProduct_Id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is Iphone\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Iphone\",\n\t\"type\": \"Hard Good\",\n\t\"upc\": \"12345676\",\n\t\"price\": 99.99,\n\t\"description\": \"This is a placeholder request for creating a new product.\",\n\t\"model\": \"NP12345\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/products?name[$like]=Iphone||macbook&store.name[$like]=Apple",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "name[$like]",
+									"value": "Iphone||macbook"
+								},
+								{
+									"key": "store.name[$like]",
+									"value": "Apple"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product from any categories except Apple products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id2 = jsonData.id;",
+									"",
+									"pm.globals.set(\"Product_Name\", jsonProduct_name);",
+									"pm.globals.set(\"Product_Id2\", jsonProduct_Id2);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is Fan\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id2);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Fan\",\n\t\"type\": \"Hard Good\",\n\t\"upc\": \"12345676\",\n\t\"price\": 99.99,\n\t\"description\": \"This is a placeholder request for creating a new product.\",\n\t\"model\": \"NP12345\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/products",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Store that sell apple products",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_name = jsonData.name;",
+									"var jsonStore_Id = jsonData.id;",
+									"",
+									"pm.globals.set(\"Store_Name\", jsonStore_name);",
+									"pm.globals.set(\"Store_Id\", jsonStore_Id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of Store is Apple Shop\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonStore_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonStore_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t  \"name\": \"Apple Shop\",\n      \"type\": \"BigBox\",\n      \"address\": \"123 Fake St\",\n      \"address2\": \"\",\n      \"city\": \"Springfield\",\n      \"state\": \"MN\",\n      \"zip\": \"55123\",\n      \"lat\": 44.969658,\n      \"lng\": -93.449539,\n      \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores?name[$like]=Apple",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores"
+							],
+							"query": [
+								{
+									"key": "name[$like]",
+									"value": "Apple"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Store that isn't sell apple products",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_name = jsonData.name;",
+									"var jsonStore_Id2 = jsonData.id;",
+									"",
+									"pm.globals.set(\"Store_Name\", jsonStore_name);",
+									"pm.globals.set(\"Store_Id2\", jsonStore_Id2);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of Store is New Shop\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonStore_Id2);",
+									"    pm.expect(jsonData.name).to.eql(jsonStore_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t  \"name\": \"New Shop\",\n      \"type\": \"BigBox\",\n      \"address\": \"123 Fake St\",\n      \"address2\": \"\",\n      \"city\": \"Springfield\",\n      \"state\": \"MN\",\n      \"zip\": \"55123\",\n      \"lat\": 44.969658,\n      \"lng\": -93.449539,\n      \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find stores that sell Apple products",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_name = jsonData.name;",
+									"var jsonStore_Id = jsonData.id;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of Store is Apple Shop\", function () {",
+									"    pm.expect(jsonData.name).to.eql(jsonStore_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores?name=Apple Shop",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Apple Shop"
+								},
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the First Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the First Product is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products/{{Product_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products",
+								"{{Product_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete The second Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Second Product is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products/{{Product_Id2}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products",
+								"{{Product_Id2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the First Store that sell apple products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_name = jsonData.name;",
+									"var jsonStore_Id = jsonData.id",
+									"",
+									"pm.globals.set(\"jsonStore_Id\", jsonData.id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Store is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonStore_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonStore_name);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores/{{Store_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores",
+								"{{Store_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the First Store that not sell apple products Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_name = jsonData.name;",
+									"var jsonStore_Id = jsonData.id",
+									"var jsonStore_Id2 = jsonData.id",
+									"",
+									"pm.globals.set(\"jsonStore_Id2\", jsonData.id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Store is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonStore_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonStore_name);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores/{{Store_Id2}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores",
+								"{{Store_Id2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find stores in Minnesota",
+			"item": [
+				{
+					"name": "Create Store with state \"MN\"",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_State = jsonData.state;",
+									"var jsonStore_Id = jsonData.id;",
+									"",
+									"",
+									"pm.globals.set(\"Store_State\", jsonStore_State);",
+									"pm.globals.set(\"Store_Id\", jsonStore_Id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the State of Store is MN\", function () {",
+									"    pm.expect(jsonData.state).to.eql(jsonStore_State);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t  \"name\": \"New Store\",\n      \"type\": \"BigBox\",\n      \"address\": \"123 Fake St\",\n      \"address2\": \"\",\n      \"city\": \"Springfield\",\n      \"state\": \"MN\",\n      \"zip\": \"55123\",\n      \"lat\": 44.969658,\n      \"lng\": -93.449539,\n      \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Store without state \"MN\"",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_State2 = jsonData.state;",
+									"var jsonStore_Id2 = jsonData.id;",
+									"",
+									"",
+									"pm.globals.set(\"Store_State\", jsonStore_State2);",
+									"pm.globals.set(\"Store_Id2\", jsonStore_Id2);",
+									"",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the State of Store is Not MN\", function () {",
+									"    pm.expect(jsonData.state).to.eql(jsonStore_State2);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t  \"name\": \"New Store\",\n      \"type\": \"BigBox\",\n      \"address\": \"123 Fake St\",\n      \"address2\": \"\",\n      \"city\": \"Springfield\",\n      \"state\": \"test\",\n      \"zip\": \"55123\",\n      \"lat\": 44.969658,\n      \"lng\": -93.449539,\n      \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find stores in Minnesota",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_State = jsonData.state;",
+									"",
+									"pm.globals.set(\"Store_State\", jsonStore_State);",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the MN State of Store appears only\", function () {",
+									"    pm.expect(jsonData.state).to.eql(jsonStore_State);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores?state=MN",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores"
+							],
+							"query": [
+								{
+									"key": "state",
+									"value": "MN"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the First Store that sell apple products Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_name = jsonData.name;",
+									"var jsonStore_Id = jsonData.id",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Store is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonStore_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonStore_name);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores/{{Store_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores",
+								"{{Store_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the First Store that not sell apple products Copy 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonStore_name = jsonData.name;",
+									"var jsonStore_Id = jsonData.id",
+									"var jsonStore_Id2 = jsonData.id",
+									"",
+									"pm.globals.set(\"jsonStore_Id2\", jsonData.id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Store is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonStore_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonStore_name);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores/{{Store_Id2}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores",
+								"{{Store_Id2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TVs with free shipping and price between $500 and $800",
+			"item": [
+				{
+					"name": "Delete All the created Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_Id = jsonData.id ;",
+									"var jsonCategory_name = jsonData.name;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_name = jsonData.name;",
+									"var jsonCategory_Id = jsonData.id ;",
+									"",
+									"pm.globals.set(\"Category_Id\", jsonCategory_Id);",
+									"pm.globals.set(\"Category_Name\", jsonCategory_name);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of Category is New Category\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{      \n\t\"id\": \"9999829\",\n\t\"name\": \"New Category\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product with price between 500 and 800",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"var jsonProduct_Price = jsonData.price;",
+									"var jsonProduct_Shipping = jsonData.shipping;",
+									"",
+									"pm.globals.set(\"Shipping_Fees\", jsonProduct_Shipping);",
+									"pm.globals.set(\"Product_Name\", jsonProduct_name);",
+									"pm.globals.set(\"Product_Id\", jsonProduct_Id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is TV and its price between 500 and 800\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									" pm.expect(jsonData.price).to.eql(jsonProduct_Price);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"TV\",\n\t\"type\": \"Hard Good\",\n\t\"upc\": \"12345677\",\n\t\"price\": 700,\n    \"shipping\": 0,\n\t\"description\": \"This is a placeholder request for creating a new product.\",\n\t\"model\": \"NP12345\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/products?category.name=TV",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "category.name",
+									"value": "TV"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product less than 500",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"var jsonProduct_Price_less_than500 = jsonData.price;",
+									"",
+									"pm.globals.set(\"Product_price_less_than500\", jsonData.price);",
+									"pm.globals.set(\"Product_Name\", jsonProduct_name);",
+									"pm.globals.set(\"Product_Id2\", jsonProduct_Id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is TV and its price less than 500\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									" pm.expect(jsonData.price).to.eql(jsonProduct_Price_less_than500);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"TV\",\n\t\"type\": \"Hard Good\",\n\t\"upc\": \"12345677\",\n\t\"price\": 100,\n    \"shipping\": 50,\n\t\"description\": \"This is a placeholder request for creating a new product.\",\n\t\"model\": \"NP12345\"\n}"
+						},
+						"url": {
+							"raw": "{{URL_LocalHost}}/products",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TVs with free shipping and price between $500 and $800",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"var jsonProduct_Price = jsonData.price;",
+									"var jsonProduct_Shipping = jsonData.shipping;",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the name of product is TV and its price less than 500 and shipping fees equal 0\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									" pm.expect(jsonData.price).to.eql(jsonProduct_Price);",
+									"  pm.expect(jsonData.shipping).to.eql(jsonProduct_Shipping);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products?name=TV&price[$gt]=500&price[$lt]=800&shipping[$eq]=0",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "TV"
+								},
+								{
+									"key": "price[$gt]",
+									"value": "500"
+								},
+								{
+									"key": "price[$lt]",
+									"value": "800"
+								},
+								{
+									"key": "shipping[$eq]",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the Newly created Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonCategory_Id = jsonData.id ;",
+									"var jsonCategory_name = jsonData.name;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the newly created Category is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonCategory_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonCategory_name);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/categories/{{Category_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"categories",
+								"{{Category_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the First Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id = jsonData.id;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the First Product is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products/{{Product_Id}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products",
+								"{{Product_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete The second Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var jsonProduct_name = jsonData.name;",
+									"var jsonProduct_Id2 = jsonData.id;",
+									"",
+									"pm.globals.set(\"Product_Id2\", jsonProduct_Id2);",
+									"pm.globals.set(\"Product_Name\", jsonProduct_name);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Check that the Second Product is deleted Successfully\", function () {",
+									"    pm.expect(jsonData.id).to.eql(jsonProduct_Id2);",
+									"    pm.expect(jsonData.name).to.eql(jsonProduct_name);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/products/{{Product_Id2}}",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"products",
+								"{{Product_Id2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find Stores Within 10 Miles of Beverly Hills",
+			"item": [
+				{
+					"name": "Find Stores Within 10 Miles of Beverly Hills",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_LocalHost}}/stores",
+							"host": [
+								"{{URL_LocalHost}}"
+							],
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
