@@ -5,12 +5,13 @@ import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
 import Pages.FaceBookHomePage;
 import Pages.LoginPage;
 import Pages.RegisertaionForm;
+import ScreenShot.ScreenshotClass;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class LoginScreen {
@@ -19,20 +20,20 @@ public class LoginScreen {
 	LoginPage login;
 	FaceBookHomePage FbHome;
 	RegisertaionForm ReisterScreen;
+	ScreenshotClass Screenshots;
 	
 	@Test(description = "Given I am on the Facebook Login Screen, Then the user logged into Facebook Successfully")
 	public void CheckThatUserSuccessfullyLoggingtoFacebook() throws IOException {
 		
-		login.EnterCredientials("rjtyirnfxr_1655931212@tfbnw.net","test@123");
-		
-		login.ScreenShots("ScreenShotFromLoggingPage");
-		login.ClickOnSignInButton();
+		Screenshots.ScreenShots("ScreenShotFromLoggingPage");
+		login.EnterCredientials("rjtyirnfxr_1655931212@tfbnw.net","test@123")
+		     .ClickOnSignInButton();		
 		Assert.assertEquals(FbHome.WelconFaceBook(), "Welcome to Facebook, William");
-		FbHome.ScreenShots("LoggingToFacebookSucessfully");
+		Screenshots.ScreenShots("LoggingToFacebookSucessfully");
 	}
 
-	@BeforeMethod
-	public void beforeMethod() {
+	@BeforeClass
+	public void beforeClass() {
 
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
@@ -40,13 +41,13 @@ public class LoginScreen {
 		login = new LoginPage(driver);
 		FbHome = new FaceBookHomePage(driver);
 		ReisterScreen = new RegisertaionForm(driver);
+		Screenshots = new ScreenshotClass(driver);
 		login.Navigate();
-
 	}
+	
 
-	@AfterMethod
-	public void afterMethod() {
-		System.out.println("afterMethod");
+	@AfterClass
+	public void afterClass() {
 		driver.quit();
 	}
 }

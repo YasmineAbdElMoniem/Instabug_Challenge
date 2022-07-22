@@ -1,12 +1,6 @@
 package Pages;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage {
@@ -30,26 +24,14 @@ public class LoginPage {
 
 	}
 
-	public void EnterCredientials(String Username, String Pass) {
+	public LoginPage EnterCredientials(String Username, String Pass) {
 		driver.findElement(UsernameText).sendKeys(Username);
 		driver.findElement(Password).sendKeys(Pass);
-
+		return this;
 	}
 
-	public void ClickOnSignInButton() {
+	public LoginPage ClickOnSignInButton() {
 		driver.findElement(SignInButton).click();
-
-	}
-
-	public void ScreenShots(String ScreenshotName) throws IOException {
-
-		TakesScreenshot scrShot = ((TakesScreenshot) driver);
-
-		File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
-
-		File DestFileDestFile = new File(System.getProperty("user.dir") + "/ScreenShots/" + ScreenshotName + ".png");
-
-		FileUtils.copyFile(SrcFile, DestFileDestFile);
-
+		return this;
 	}
 }

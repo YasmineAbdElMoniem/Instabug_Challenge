@@ -2,35 +2,35 @@
 <testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2022-07-03T14:57:16 EET" name="Default suite" finished-at="2022-07-03T14:57:57 EET" duration-ms="41405">
+  <suite started-at="2022-07-22T15:23:58 EET" name="Default suite" finished-at="2022-07-22T15:24:48 EET" duration-ms="50250">
     <groups>
     </groups>
-    <test started-at="2022-07-03T14:57:16 EET" name="Default test" finished-at="2022-07-03T14:57:57 EET" duration-ms="41405">
+    <test started-at="2022-07-22T15:23:58 EET" name="Default test" finished-at="2022-07-22T15:24:48 EET" duration-ms="50250">
       <class name="Tests.RegisterScreen">
-        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:Tests.RegisterScreen@5223e5ee]" started-at="2022-07-03T14:57:16 EET" name="beforeMethod" finished-at="2022-07-03T14:57:23 EET" duration-ms="7365" status="PASS">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:Tests.RegisterScreen@e056f20]" started-at="2022-07-22T15:23:58 EET" name="beforeClass" finished-at="2022-07-22T15:24:02 EET" duration-ms="3535" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:Tests.RegisterScreen@e056f20]" started-at="2022-07-22T15:24:02 EET" name="beforeMethod" finished-at="2022-07-22T15:24:07 EET" duration-ms="4999" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method signature="CheckThatRegiserationFormAppearsSucessfully()[pri:0, instance:Tests.RegisterScreen@5223e5ee]" started-at="2022-07-03T14:57:23 EET" name="CheckThatRegiserationFormAppearsSucessfully" description="Given I am on the Facebook login page ,When user clicks on Create Account, Then the Facebook registeration form is appears Successfully" finished-at="2022-07-03T14:57:28 EET" duration-ms="4797" status="PASS">
+        <test-method signature="CheckThatRegiserationFormAppearsSucessfully()[pri:0, instance:Tests.RegisterScreen@e056f20]" started-at="2022-07-22T15:24:07 EET" name="CheckThatRegiserationFormAppearsSucessfully" description="Given I am on the Facebook login page ,When user clicks on Create Account, Then the Facebook registeration form is appears Successfully" finished-at="2022-07-22T15:24:16 EET" duration-ms="9200" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- CheckThatRegiserationFormAppearsSucessfully -->
-        <test-method is-config="true" signature="afterMethod()[pri:0, instance:Tests.RegisterScreen@5223e5ee]" started-at="2022-07-03T14:57:28 EET" name="afterMethod" finished-at="2022-07-03T14:57:28 EET" duration-ms="147" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- afterMethod -->
-        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:Tests.RegisterScreen@5223e5ee]" started-at="2022-07-03T14:57:28 EET" name="beforeMethod" finished-at="2022-07-03T14:57:33 EET" duration-ms="5071" status="PASS">
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:Tests.RegisterScreen@e056f20]" started-at="2022-07-22T15:24:16 EET" name="beforeMethod" finished-at="2022-07-22T15:24:18 EET" duration-ms="1678" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method signature="CheckThatRegisterationOfFacebookAccountiscreatedSucessfully()[pri:0, instance:Tests.RegisterScreen@5223e5ee]" started-at="2022-07-03T14:57:33 EET" name="CheckThatRegisterationOfFacebookAccountiscreatedSucessfully" description="Given I am on the Facebook Reisteration Form, Then the user can register to Facebook Successfully" finished-at="2022-07-03T14:57:57 EET" duration-ms="23881" status="PASS">
+        <test-method signature="CheckThatRegisterationOfFacebookAccountiscreatedSucessfully()[pri:0, instance:Tests.RegisterScreen@e056f20]" started-at="2022-07-22T15:24:18 EET" name="CheckThatRegisterationOfFacebookAccountiscreatedSucessfully" description="Given I am on the Facebook Reisteration Form, Then the user can register to Facebook Successfully" finished-at="2022-07-22T15:24:48 EET" duration-ms="30670" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- CheckThatRegisterationOfFacebookAccountiscreatedSucessfully -->
-        <test-method is-config="true" signature="afterMethod()[pri:0, instance:Tests.RegisterScreen@5223e5ee]" started-at="2022-07-03T14:57:57 EET" name="afterMethod" finished-at="2022-07-03T14:57:57 EET" duration-ms="109" status="PASS">
+        <test-method is-config="true" signature="afterClass()[pri:0, instance:Tests.RegisterScreen@e056f20]" started-at="2022-07-22T15:24:48 EET" name="afterClass" finished-at="2022-07-22T15:24:48 EET" duration-ms="119" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- afterMethod -->
+        </test-method> <!-- afterClass -->
       </class> <!-- Tests.RegisterScreen -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

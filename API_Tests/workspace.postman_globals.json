@@ -1,0 +1,141 @@
+{
+	"id": "c5d981a5-7e9e-4cd0-8dfe-4586ac78ed41",
+	"values": [
+		{
+			"key": "URL_LocalHost",
+			"value": "http://localhost:3030",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Product_Name",
+			"value": "TV",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Store_Name",
+			"value": "New Shop",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Service_Name",
+			"value": "Test Service",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Service_Id",
+			"value": 96,
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Category_Id",
+			"value": "9999829",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Product_Description",
+			"value": "This is a new Shirt",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Product_Highest_Price",
+			"value": 100,
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Product_Lowest_Price",
+			"value": 20,
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Category_Name",
+			"value": "New Category",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Category_Name_TV",
+			"value": "TV",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Category_Id2",
+			"value": "pcmcat12100",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Product_price",
+			"value": 700,
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Product_price_less_than500",
+			"value": 100,
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Shipping_Fees",
+			"value": 0,
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Product_Id2",
+			"value": 10000313,
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Store_Id",
+			"value": 9263,
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Store_Id2",
+			"value": 9264,
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Product_Id",
+			"value": 10000312,
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "jsonStore_Id2",
+			"value": 9264,
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Store_State",
+			"value": null,
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "jsonStore_Id",
+			"value": 9261,
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2022-07-14T10:57:24.748Z",
+	"_postman_exported_using": "Postman/9.24.2"
+}

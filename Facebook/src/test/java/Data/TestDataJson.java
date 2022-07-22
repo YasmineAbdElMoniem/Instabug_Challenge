@@ -34,19 +34,12 @@ public class TestDataJson {
 			JSONObject Test = (JSONObject) jsonObj;
 			
 			First_Name = (String) Test.get("Fist_Name");			
-			System.out.println(First_Name);
 			Last_Name = (String) Test.get("Last_Name");			
-			System.out.println(First_Name);
 			Phone_Number = (String) Test.get("Phone_Number");			
-			System.out.println(First_Name);
 			Password = (String) Test.get("Password");			
-			System.out.println(First_Name);
 			Day = (String) Test.get("Day");			
-			System.out.println(First_Name);
 			Month = (String) Test.get("Month");			
-			System.out.println(First_Name);
 			Year = (String) Test.get("Year");			
-			System.out.println(First_Name);
 		}
 	}
 
